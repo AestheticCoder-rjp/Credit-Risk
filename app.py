@@ -6,3 +6,4 @@ import matplotlib.pyplot as plt
 from analysis import data
 data()
 st.write("hello")
+st.write(data())
