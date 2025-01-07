@@ -8,8 +8,9 @@ def data():
         # Return basic information as a dictionary for Streamlit display
         return {
             "Dataset Shape": df.shape,
-            "Columns": df.columns.tolist(),
+            "Columns": df.columns,
             "Sample Data": df.head(),
+            "Data Types": df.dtypes
         }
     except FileNotFoundError:
         return "File 'LoanHistoricalData.csv' not found. Please check the file path."

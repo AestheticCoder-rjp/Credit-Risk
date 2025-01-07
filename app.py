@@ -16,7 +16,9 @@ if isinstance(result, dict):
     st.write("### Columns")
     st.write(result["Columns"])
     st.write("### Sample Data")
-    st.dataframe(result["Sample Data"])  # Use Streamlit's dataframe display
+    st.dataframe(result["Sample Data"]) 
+    # Use Streamlit's dataframe display
+    st.write(result['Data Types'])
 elif isinstance(result, str):
     # Display error message
     st.error(result)
