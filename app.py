@@ -1,20 +1,24 @@
 import streamlit as st
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
 
-# Import the 'data' function or variable from the 'analysis' module
+# Import the 'data' function from the 'analysis' module
 from analysis import data
 
 # Call the 'data' function and store its result
 result = data()
-st.write(result)
-# Streamlit app
-st.write("Hello, Streamlit!")
-# if result is not None:
-#     st.write(result)
-# else:
-#     st.write("The 'data' function returned None or is not implemented correctly.")
 
-df=pd.read_csv('D:\@CU\Case_Study\Credit-Risk\LoanHistoricalData.csv')
-st.write(df.head())
+# Streamlit app
+st.title("Loan Historical Data Analysis")
+
+if isinstance(result, dict):
+    # Display dataset information
+    st.write("### Dataset Shape")
+    st.write(result["Dataset Shape"])
+    st.write("### Columns")
+    st.write(result["Columns"])
+    st.write("### Sample Data")
+    st.dataframe(result["Sample Data"])  # Use Streamlit's dataframe display
+elif isinstance(result, str):
+    # Display error message
+    st.error(result)
+else:
+    st.write("Unexpected result from the 'data' function.")

@@ -1,15 +1,17 @@
-# Load the data and show basic information
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 def data():
-    df = pd.read_csv('LoanHistoricalData.csv')
-    print("Dataset Shape (rows, columns):")
-    print(df.shape)
-    print("\Columns available:")
-    print(df.columns.tolist())
-    print("\Sample of the data:")
-    print(df.head())
-    print("hello")
-    return df
+    try:
+        # Load the CSV file
+        df = pd.read_csv('LoanHistoricalData.csv')
+        
+        # Return basic information as a dictionary for Streamlit display
+        return {
+            "Dataset Shape": df.shape,
+            "Columns": df.columns.tolist(),
+            "Sample Data": df.head(),
+        }
+    except FileNotFoundError:
+        return "File 'LoanHistoricalData.csv' not found. Please check the file path."
+    except Exception as e:
+        return f"An error occurred: {e}"
