@@ -11,7 +11,10 @@ result = data()
 st.write(result)
 # Streamlit app
 st.write("Hello, Streamlit!")
-if result is not None:
-    st.write(result)
-else:
-    st.write("The 'data' function returned None or is not implemented correctly.")
+# if result is not None:
+#     st.write(result)
+# else:
+#     st.write("The 'data' function returned None or is not implemented correctly.")
+
+df=pd.read_csv('LoanHistoricalData.csv')
+st.write(df.head())

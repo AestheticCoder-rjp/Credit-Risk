@@ -7,11 +7,9 @@ def data():
     df = pd.read_csv('LoanHistoricalData.csv')
     print("Dataset Shape (rows, columns):")
     print(df.shape)
-    print("\
-    Columns available:")
+    print("\Columns available:")
     print(df.columns.tolist())
-    print("\
-    Sample of the data:")
+    print("\Sample of the data:")
     print(df.head())
     print("hello")
     return df
