@@ -6,12 +6,7 @@ def data():
         df = pd.read_csv('LoanHistoricalData.csv')
         
         # Return basic information as a dictionary for Streamlit display
-        return {
-            "Dataset Shape": df.shape,
-            "Columns": df.columns,
-            "Sample Data": df.head(),
-            "Data Types": df.dtypes
-        }
+        return df
     except FileNotFoundError:
         return "File 'LoanHistoricalData.csv' not found. Please check the file path."
     except Exception as e:
