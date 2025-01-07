@@ -14,3 +14,4 @@ def data():
     Sample of the data:")
     print(df.head())
     print("hello")
+    return df
