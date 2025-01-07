@@ -16,5 +16,5 @@ st.write("Hello, Streamlit!")
 # else:
 #     st.write("The 'data' function returned None or is not implemented correctly.")
 
-df=pd.read_csv('LoanHistoricalData.csv')
+df=pd.read_csv('D:\@CU\Case_Study\Credit-Risk\LoanHistoricalData.csv')
 st.write(df.head())
