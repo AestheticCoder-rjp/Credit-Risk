@@ -8,7 +8,7 @@ from analysis import data
 
 # Call the 'data' function and store its result
 result = data()
-
+st.write(result)
 # Streamlit app
 st.write("Hello, Streamlit!")
 if result is not None:
