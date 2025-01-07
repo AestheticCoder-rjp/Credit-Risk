@@ -3,7 +3,15 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+# Import the 'data' function or variable from the 'analysis' module
 from analysis import data
-data()
-st.write("hello")
-st.write(data())
+
+# Call the 'data' function and store its result
+result = data()
+
+# Streamlit app
+st.write("Hello, Streamlit!")
+if result is not None:
+    st.write(result)
+else:
+    st.write("The 'data' function returned None or is not implemented correctly.")
