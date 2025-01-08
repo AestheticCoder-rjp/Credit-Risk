@@ -27,6 +27,7 @@ def main():
     
     # Display selected section
     if selected == "EDA":
+        
         display_eda(df)
         display_plots(df)
     elif selected == "Analysis":
@@ -34,14 +35,6 @@ def main():
         
         # Generate insights
         insights = generate_insights(df)
-
-        # Sidebar navigation for insights
-        options = list(insights.keys())
-        choice = st.sidebar.selectbox("Select an analysis to display", options)
-
-        # Display selected insight
-        if choice in insights:
-            st.plotly_chart(insights[choice])
     elif selected == "Modeling":
         # st.write("## Modeling Section (Work in Progress)")
         # a,b=preprocess_data('LoanHistoricalData.csv')
