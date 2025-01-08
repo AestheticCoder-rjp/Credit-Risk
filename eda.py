@@ -1,80 +1,3 @@
-
-# import streamlit as st
-# import plotly.express as px
-# import pandas as pd
-
-# def display_eda(df):
-#     """
-#     Perform and display exploratory data analysis.
-#     """
-#     st.write("## Exploratory Data Analysis")
-    
-#     st.write("### Dataset Shape")
-#     st.write(f"Number of rows: {df.shape[0]}, Number of columns: {df.shape[1]}")
-
-#     st.write("### Dataset Columns")
-#     st.write(df.columns)
-
-#     st.write("### Checking for Missing Values")
-#     st.write(df.isnull().sum())
-
-#     st.write("### Data Types")
-#     st.write(df.dtypes)
-
-#     st.write("### Dataset Summary")
-#     st.write(df.describe())
-
-# def display_plots(df):
-#     """
-#     Display various plots for the dataset using plotly.
-#     """
-#     st.write("## Visualizations")
-    
-#     # Histogram
-#     st.write("### Histogram")
-#     st.write("A visualization of the distribution of a numerical column's values.")
-#     column = st.selectbox("Select a numerical column for histogram", df.select_dtypes(include=['number']).columns, key="histogram")
-#     if column:
-#         fig = px.histogram(df, x=column, nbins=20, title=f"Distribution of {column}", template='plotly_dark')
-#         st.plotly_chart(fig)
-
-#     # Box Plot
-#     st.write("### Box Plot")
-#     st.write("Displays the distribution of a numerical column through quartiles and outliers.")
-#     box_column = st.selectbox("Select a numerical column for box plot", df.select_dtypes(include=['number']).columns, key="boxplot")
-#     if box_column:
-#         fig = px.box(df, y=box_column, title=f"Box Plot of {box_column}", template='plotly_dark')
-#         st.plotly_chart(fig)
-
-#     # Scatter Plot
-#     st.write("### Scatter Plot")
-#     st.write(" Shows the relationship between two numerical variables.")
-#     scatter_x = st.selectbox("Select X-axis for scatter plot", df.select_dtypes(include=['number']).columns, key="scatter_x")
-#     scatter_y = st.selectbox("Select Y-axis for scatter plot", df.select_dtypes(include=['number']).columns, key="scatter_y")
-#     if scatter_x and scatter_y:
-#         fig = px.scatter(df, x=scatter_x, y=scatter_y, title=f"Scatter Plot between {scatter_x} and {scatter_y}", template='plotly_dark')
-#         st.plotly_chart(fig)
-
-#     # Correlation Heatmap
-#     st.write("### Correlation Heatmap")
-#     st.write("A color-coded matrix showing the correlations between numerical variables.")
-#     numeric_df = df.select_dtypes(include=['number'])
-#     numeric_df.drop(columns=["INTEREST_RATE"], inplace=True, errors='ignore')  # Exclude specific column if needed
-#     if not numeric_df.empty:
-#         corr_matrix = numeric_df.corr()
-#         fig = px.imshow(corr_matrix, text_auto=True, title="Correlation Heatmap", template='plotly_dark', color_continuous_scale='Blues')
-#         st.plotly_chart(fig)
-    
-#     # Grouped Analysis
-#     st.write("### Grouped Analysis")
-#     st.write("A bar chart visualizing the average of a numerical column grouped by a categorical column.")
-#     group_column = st.selectbox("Select a column to group by", df.columns)
-#     agg_column = st.selectbox("Select a column to aggregate", df.select_dtypes(include=['int64', 'float64']).columns)
-#     if group_column and agg_column:
-#         grouped_data = df.groupby(group_column)[agg_column].mean().reset_index()
-#         fig = px.bar(grouped_data, x=group_column, y=agg_column, title=f"Average {agg_column} by {group_column}", template='plotly_dark')
-#         st.plotly_chart(fig)
-
 import streamlit as st
 import plotly.express as px
 import pandas as pd
@@ -83,7 +6,7 @@ def display_eda(df):
     """
     Perform and display exploratory data analysis.
     """
-    st.write("## Exploratory Data Analysis")
+    st.header("Exploratory Data Analysis",divider="rainbow")
     
     st.write("### Dataset Shape")
     st.write(f"Number of rows: {df.shape[0]}, Number of columns: {df.shape[1]}")
@@ -158,6 +81,8 @@ def display_plots(df):
     # Correlation Heatmap
     st.write("### Correlation Heatmap")
     st.write("A color-coded matrix showing the correlations between numerical variables.")
+    st.write("Recommended Loan Amount is highly correlated with Tenor and Total Income.")
+    st.write("Note: Correlation values range from -1 to 1, where 1 indicates a strong positive correlation and -1 indicates a strong negative correlation.")
     numeric_df = df.select_dtypes(include=['number'])
     numeric_df.drop(columns=["INTEREST_RATE"], inplace=True, errors='ignore')  # Exclude specific column if needed
     if not numeric_df.empty:

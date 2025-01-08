@@ -31,7 +31,7 @@ def main():
         display_eda(df)
         display_plots(df)
     elif selected == "Analysis":
-        st.write("## Top Insights")
+        st.header("Top Insights",divider="rainbow")
         
         # Generate insights
         insights = generate_insights(df)
