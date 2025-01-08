@@ -1,105 +1,61 @@
 import streamlit as st
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
 from streamlit_option_menu import option_menu
+import pandas as pd
+from eda import display_eda, display_plots
+from analysis import generate_insights
+from model import loan_status_prediction_app
 
-# Import the 'data' function from the 'analysis' module
-from analysis import data
-
-selected = option_menu( 
-                menu_title=None, 
-                options = ["EDA", "Analysis","Model"],
-                icons= ["activity","bar-chart","brilliance"] ,menu_icon="cast",
-                        default_index=0,
-                        orientation="horizontal" )
-
-# Call the 'data' function and store its result
-df = data()
-
-# Streamlit app
-st.title("Loan Historical Data Analysis")
-
-if isinstance(df, pd.DataFrame):  # Ensure df is a valid DataFrame
-    st.write("### Dataset Shape")
-    st.write(df.shape)
+def main():
+    st.markdown("# Loan Historical Data Analysis")
     
-    st.write("### Dataset Columns")
-    st.write(df.columns)
-
-    st.write("### Checking Null Values")
-    st.write(df.isnull().sum())
-    
-    st.write("### Checking Data Types")
-    st.write(df.dtypes)
-    
-    st.write("### Dataset Summary")
-    st.write(df.describe())
-    
-    # Plots Section
-    st.write("## Data Visualization")
-    
-    # Select column for histogram
-    st.write("### Histogram")
-    column = st.selectbox("Select a column for histogram", df.select_dtypes(include=['int64', 'float64']).columns)
-    if column:
-        fig, ax = plt.subplots()
-        sns.histplot(df[column], kde=True, ax=ax)
-        st.pyplot(fig)
-    
-    # Box Plot
-    st.write("### Box Plot")
-    box_column = st.selectbox("Select a column for box plot", df.select_dtypes(include=['int64', 'float64']).columns)
-    if box_column:
-        fig, ax = plt.subplots()
-        sns.boxplot(data=df, y=box_column, ax=ax)
-        st.pyplot(fig)
-    
-    # Scatter Plot
-    st.write("### Scatter Plot")
-    scatter_x = st.selectbox("Select X-axis for scatter plot", df.select_dtypes(include=['int64', 'float64']).columns)
-    scatter_y = st.selectbox("Select Y-axis for scatter plot", df.select_dtypes(include=['int64', 'float64']).columns)
-    if scatter_x and scatter_y:
-        fig, ax = plt.subplots()
-        sns.scatterplot(data=df, x=scatter_x, y=scatter_y, ax=ax)
-        st.pyplot(fig)
-    
-        
-    # Correlation Heatmap
-    st.write("### Correlation Heatmap")
+    # Load the dataset
     try:
-        numeric_df = df.select_dtypes(include=['number'])  # Select only numeric columns
-        numeric_df.drop("INTEREST_RATE",axis=1,inplace=True, errors="ignore")
-        if numeric_df.empty:
-            st.write("No numeric columns available for correlation heatmap.")
-        else:
-            fig, ax = plt.subplots(figsize=(10, 6))
-            sns.heatmap(numeric_df.corr(), annot=True, cmap="coolwarm", ax=ax)
-            st.pyplot(fig)
-    except Exception as e:
-        st.write(f"Error in generating correlation heatmap: {e}")
-
+        df = pd.read_csv("LoanHistoricalData.csv")
+    except FileNotFoundError:
+        st.error("Dataset not found. Please check the file path.")
+        return
     
-    # Grouped Analysis
-    st.write("### Grouped Analysis")
-    group_column = st.selectbox("Select a column to group by", df.columns)
-    agg_column = st.selectbox("Select a column to aggregate", df.select_dtypes(include=['int64', 'float64']).columns)
-    if group_column and agg_column:
-        grouped_data = df.groupby(group_column)[agg_column].mean()
-        st.write(grouped_data)
-else:
-    st.write(df)
+    # Sidebar navigation
+    selected = option_menu(
+        menu_title=None, 
+        options=["EDA", "Analysis", "Modeling"],
+        icons=["activity", "bar-chart", "brilliance"],
+        menu_icon="cast",
+        default_index=0,
+        orientation="horizontal"
+    )
+    
+    # Display selected section
+    if selected == "EDA":
+        display_eda(df)
+        display_plots(df)
+    elif selected == "Analysis":
+        st.write("## Top Insights")
+        
+        # Generate insights
+        insights = generate_insights(df)
+
+        # Sidebar navigation for insights
+        options = list(insights.keys())
+        choice = st.sidebar.selectbox("Select an analysis to display", options)
+
+        # Display selected insight
+        if choice in insights:
+            st.plotly_chart(insights[choice])
+    elif selected == "Modeling":
+        # st.write("## Modeling Section (Work in Progress)")
+        # a,b=preprocess_data('LoanHistoricalData.csv')
+        # st.write("## Model Performance Comparison")
+        # results_df = train_and_evaluate_models(a)
+        # st.write(results_df)
+        # st.pyplot(visualize_results(results_df))
+        # Run the app
+        #loan_status_prediction_app(df)
+
+# Now call the Streamlit app function
+        loan_status_prediction_app(df)
 
 
-
-#     # Display selected section
-#     if selected == "EDA":
-#         display_eda(data)
-#     elif selected == "Plots":
-#         display_plots(data)
-#     elif selected == "Predictions":
-#         make_predictions(data)
-
-
-# if __name__ == "__main__":
-#     main()
+        
+if __name__ == "__main__":
+    main()
